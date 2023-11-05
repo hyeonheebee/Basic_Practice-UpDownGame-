@@ -13,21 +13,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var mainLabel: UILabel!
     @IBOutlet weak var numberLabel: UILabel!
     
-    // 컴퓨터는 랜덤숫자 선택하기
-    // 클래스 내부에 속성 comNumber 만듦
-    var comNumber = Int.random(in: 1...10)
-    // var myNumber: Int = 1
-    // 에러발생 가능성 예방을 위해 0대신 1을 넣어주는게 낫다
+    var upDownManager = UpDownManager()
     
     override func viewDidLoad() {
         // 상위 메서드 호출
         super.viewDidLoad()
+
+    }
+    func reset() {
         // 메인레이블에 선택하세요 라고 표시
         mainLabel.text = "선택하세용"
         // 숫자레이블은 아무표시 안하기 ""
         numberLabel.text = ""
+        upDownManager.resetComputerNumber()
     }
-
     
     @IBAction func buttonTapped(_ sender: UIButton) {
     // 버튼의 숫자를 가져온다
@@ -56,23 +55,15 @@ class ViewController: UIViewController {
         // 이렇게 가드문도 한번에 두개의 조건 사용가능 
         // guard let numString = numberLabel.text,
         // let myNumber = Int(numString) else { return }
-        if comNumber < myNumber {
-            mainLabel.text = "Down"
-        } else if comNumber > myNumber {
-            mainLabel.text = "Up"
-        } else {
-            mainLabel.text = "Correct!😘"
-        }
+        upDownManager.getMyNumber(num: myNumber)
+        mainLabel.text = upDownManager.getUpDownResult()
+        
         
     }
     
     @IBAction func resetButtonTapped(_ sender: UIButton) {
-        // 메인레이블을 선택하세요 로 재설정
-        mainLabel.text = "선택하세용"
-        // 컴퓨터 랜덤 숫자 재설정
-        comNumber = Int.random(in: 1...10)
-        // 숫자레이블은 아무표시 안하기 ""
-        numberLabel.text = ""
+        reset()
+        
     }
     
 }
